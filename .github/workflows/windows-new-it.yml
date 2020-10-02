@@ -1,0 +1,49 @@
+name: Windows CI New IT
+
+on: [push, pull_request]
+
+jobs:
+  new-integration-test:
+    runs-on: windows-2016
+    if: "contains(github.event.head_commit.message, 'run-windows-ci')"
+    steps:
+    - uses: actions/checkout@v2
+    - name: cache geode
+      uses: actions/cache@v2
+      id: cache-geode-windows
+      with:
+        path: C:\apache-geode
+        key: apache-geode-windows
+    - name: install geode
+      env:
+        CACHE_HIT: ${{steps.cache-geode-windows.outputs.cache-hit}}
+        GEODE_VERSION: 1.13.0
+      run: |
+        If ($env:CACHE_HIT -ne "true") {
+          iwr "https://downloads.apache.org/geode/$env:GEODE_VERSION/apache-geode-$env:GEODE_VERSION.tgz" -OutFile apache-geode.tgz
+          7z x apache-geode.tgz
+          7z x apache-geode.tar
+          mv apache-geode-$env:GEODE_VERSION C:\apache-geode
+          rm apache*.t*
+        }
+    - name: install doxygen
+      run: choco install doxygen.install -confirm
+    - name: install nunit
+      run: choco install nunit.install --version 2.6.4 -confirm
+    - name: install openssl
+      run: choco install openssl -confirm
+    - name: mkdir build
+      run: mkdir C:\build
+    - name: cmake configure visual studio 2017
+      run: |
+        mkdir C:\geode-native
+        mv * C:\geode-native\
+        cd C:\geode-native
+        $env:GEODE_HOME="C:\apache-geode"
+        cmake -BC:\build -G "Visual Studio 15 2017 Win64" -Thost=x64
+    - name: cmake build
+      run: cmake --build C:\build --target cpp-integration-test -- /m
+    - name: new integration tests
+      run: |
+        cd C:\build\cppcache\integration\test\
+        ctest -E BasicIPv6Test -j2
