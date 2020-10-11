@@ -36,14 +36,10 @@ TEST(PdxTypeTest, testTwoObjectsWithSameClassnameAndSameFieldsAreEquals) {
   apache::geode::client::PdxType m_pdxType2(pdxTypeRegistry,
                                             gemfireJsonClassName, false);
 
-  m_pdxType1.addVariableLengthTypeField("bar0", "string",
-                                        PdxFieldTypes::STRING);
-  m_pdxType1.addVariableLengthTypeField("bar1", "string",
-                                        PdxFieldTypes::STRING);
-  m_pdxType2.addVariableLengthTypeField("bar0", "string",
-                                        PdxFieldTypes::STRING);
-  m_pdxType2.addVariableLengthTypeField("bar1", "string",
-                                        PdxFieldTypes::STRING);
+  m_pdxType1.addVariableLengthTypeField("bar0", PdxFieldTypes::STRING);
+  m_pdxType1.addVariableLengthTypeField("bar1", PdxFieldTypes::STRING);
+  m_pdxType2.addVariableLengthTypeField("bar0", PdxFieldTypes::STRING);
+  m_pdxType2.addVariableLengthTypeField("bar1", PdxFieldTypes::STRING);
 
   EXPECT_TRUE(m_pdxType1 == m_pdxType2);
 }
@@ -56,14 +52,10 @@ TEST(PdxTypeTest,
                                             gemfireJsonClassName, false);
   apache::geode::client::PdxType m_pdxType2(pdxTypeRegistry,
                                             gemfireJsonClassName, false);
-  m_pdxType1.addVariableLengthTypeField("bar1", "string",
-                                        PdxFieldTypes::STRING);
-  m_pdxType1.addVariableLengthTypeField("bar0", "string",
-                                        PdxFieldTypes::STRING);
-  m_pdxType2.addVariableLengthTypeField("bar0", "string",
-                                        PdxFieldTypes::STRING);
-  m_pdxType2.addVariableLengthTypeField("bar1", "string",
-                                        PdxFieldTypes::STRING);
+  m_pdxType1.addVariableLengthTypeField("bar1", PdxFieldTypes::STRING);
+  m_pdxType1.addVariableLengthTypeField("bar0", PdxFieldTypes::STRING);
+  m_pdxType2.addVariableLengthTypeField("bar0", PdxFieldTypes::STRING);
+  m_pdxType2.addVariableLengthTypeField("bar1", PdxFieldTypes::STRING);
 
   EXPECT_TRUE(m_pdxType1 == m_pdxType2);
 }
@@ -77,14 +69,10 @@ TEST(PdxTypeTest,
   apache::geode::client::PdxType m_pdxType2(pdxTypeRegistry, "otherClassName",
                                             false);
 
-  m_pdxType1.addVariableLengthTypeField("bar0", "string",
-                                        PdxFieldTypes::STRING);
-  m_pdxType1.addVariableLengthTypeField("bar1", "string",
-                                        PdxFieldTypes::STRING);
-  m_pdxType2.addVariableLengthTypeField("bar0", "string",
-                                        PdxFieldTypes::STRING);
-  m_pdxType2.addVariableLengthTypeField("bar1", "string",
-                                        PdxFieldTypes::STRING);
+  m_pdxType1.addVariableLengthTypeField("bar0", PdxFieldTypes::STRING);
+  m_pdxType1.addVariableLengthTypeField("bar1", PdxFieldTypes::STRING);
+  m_pdxType2.addVariableLengthTypeField("bar0", PdxFieldTypes::STRING);
+  m_pdxType2.addVariableLengthTypeField("bar1", PdxFieldTypes::STRING);
 
   EXPECT_FALSE(m_pdxType1 == m_pdxType2);
 }
@@ -97,19 +85,13 @@ TEST(PdxTypeTest, testTwoObjectsWithSameFieldsHaveTheSameHash) {
   apache::geode::client::PdxType m_pdxType2(pdxTypeRegistry,
                                             gemfireJsonClassName, false);
 
-  m_pdxType1.addVariableLengthTypeField("bar0", "string",
-                                        PdxFieldTypes::STRING);
-  m_pdxType1.addVariableLengthTypeField("bar1", "string",
-                                        PdxFieldTypes::STRING);
-  m_pdxType1.addVariableLengthTypeField("bar2", "string",
-                                        PdxFieldTypes::STRING);
+  m_pdxType1.addVariableLengthTypeField("bar0", PdxFieldTypes::STRING);
+  m_pdxType1.addVariableLengthTypeField("bar1", PdxFieldTypes::STRING);
+  m_pdxType1.addVariableLengthTypeField("bar2", PdxFieldTypes::STRING);
 
-  m_pdxType2.addVariableLengthTypeField("bar0", "string",
-                                        PdxFieldTypes::STRING);
-  m_pdxType2.addVariableLengthTypeField("bar1", "string",
-                                        PdxFieldTypes::STRING);
-  m_pdxType2.addVariableLengthTypeField("bar2", "string",
-                                        PdxFieldTypes::STRING);
+  m_pdxType2.addVariableLengthTypeField("bar0", PdxFieldTypes::STRING);
+  m_pdxType2.addVariableLengthTypeField("bar1", PdxFieldTypes::STRING);
+  m_pdxType2.addVariableLengthTypeField("bar2", PdxFieldTypes::STRING);
 
   std::hash<apache::geode::client::PdxType> type1Hash;
   std::hash<apache::geode::client::PdxType> type2Hash;
@@ -125,15 +107,11 @@ TEST(PdxTypeTest, testTwoObjectsWithDifferentFieldsHaveDifferentHash) {
   apache::geode::client::PdxType m_pdxType2(pdxTypeRegistry,
                                             gemfireJsonClassName, false);
 
-  m_pdxType1.addVariableLengthTypeField("bar0", "string",
-                                        PdxFieldTypes::STRING);
-  m_pdxType1.addVariableLengthTypeField("bar1", "string",
-                                        PdxFieldTypes::STRING);
+  m_pdxType1.addVariableLengthTypeField("bar0", PdxFieldTypes::STRING);
+  m_pdxType1.addVariableLengthTypeField("bar1", PdxFieldTypes::STRING);
 
-  m_pdxType2.addVariableLengthTypeField("bar2", "string",
-                                        PdxFieldTypes::STRING);
-  m_pdxType2.addVariableLengthTypeField("bar3", "string",
-                                        PdxFieldTypes::STRING);
+  m_pdxType2.addVariableLengthTypeField("bar2", PdxFieldTypes::STRING);
+  m_pdxType2.addVariableLengthTypeField("bar3", PdxFieldTypes::STRING);
 
   std::hash<apache::geode::client::PdxType> type1Hash;
   std::hash<apache::geode::client::PdxType> type2Hash;
@@ -149,19 +127,13 @@ TEST(PdxTypeTest, testTwoObjectsWithSameFieldsInDifferentOrderHaveTheSameHash) {
   apache::geode::client::PdxType m_pdxType2(pdxTypeRegistry,
                                             gemfireJsonClassName, false);
 
-  m_pdxType1.addVariableLengthTypeField("bar0", "string",
-                                        PdxFieldTypes::STRING);
-  m_pdxType1.addVariableLengthTypeField("bar1", "string",
-                                        PdxFieldTypes::STRING);
-  m_pdxType1.addVariableLengthTypeField("bar2", "string",
-                                        PdxFieldTypes::STRING);
+  m_pdxType1.addVariableLengthTypeField("bar0", PdxFieldTypes::STRING);
+  m_pdxType1.addVariableLengthTypeField("bar1", PdxFieldTypes::STRING);
+  m_pdxType1.addVariableLengthTypeField("bar2", PdxFieldTypes::STRING);
 
-  m_pdxType2.addVariableLengthTypeField("bar1", "string",
-                                        PdxFieldTypes::STRING);
-  m_pdxType2.addVariableLengthTypeField("bar2", "string",
-                                        PdxFieldTypes::STRING);
-  m_pdxType2.addVariableLengthTypeField("bar0", "string",
-                                        PdxFieldTypes::STRING);
+  m_pdxType2.addVariableLengthTypeField("bar1", PdxFieldTypes::STRING);
+  m_pdxType2.addVariableLengthTypeField("bar2", PdxFieldTypes::STRING);
+  m_pdxType2.addVariableLengthTypeField("bar0", PdxFieldTypes::STRING);
 
   std::hash<apache::geode::client::PdxType> type1Hash;
   std::hash<apache::geode::client::PdxType> type2Hash;
@@ -178,18 +150,14 @@ TEST(PdxTypeTest,
   apache::geode::client::PdxType m_pdxType2(pdxTypeRegistry,
                                             gemfireJsonClassName, false);
 
-  m_pdxType1.addVariableLengthTypeField("bar0", "string",
-                                        PdxFieldTypes::STRING);
-  m_pdxType1.addVariableLengthTypeField("bar1", "string",
-                                        PdxFieldTypes::STRING);
-  m_pdxType1.addVariableLengthTypeField("bar2", "string",
-                                        PdxFieldTypes::STRING);
+  m_pdxType1.addVariableLengthTypeField("bar0", PdxFieldTypes::STRING);
+  m_pdxType1.addVariableLengthTypeField("bar1", PdxFieldTypes::STRING);
+  m_pdxType1.addVariableLengthTypeField("bar2", PdxFieldTypes::STRING);
 
-  m_pdxType2.addVariableLengthTypeField("bar0", "string",
-                                        PdxFieldTypes::STRING);
-  m_pdxType2.addFixedLengthTypeField("bar1", "bool", PdxFieldTypes::BOOLEAN,
+  m_pdxType2.addVariableLengthTypeField("bar0", PdxFieldTypes::STRING);
+  m_pdxType2.addFixedLengthTypeField("bar1", PdxFieldTypes::BOOLEAN,
                                      PdxTypes::BOOLEAN_SIZE);
-  m_pdxType2.addFixedLengthTypeField("bar2", "int", PdxFieldTypes::INT,
+  m_pdxType2.addFixedLengthTypeField("bar2", PdxFieldTypes::INT,
                                      PdxTypes::INTEGER_SIZE);
 
   std::hash<apache::geode::client::PdxType> type1Hash;

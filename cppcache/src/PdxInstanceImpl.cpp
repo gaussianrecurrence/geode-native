@@ -46,8 +46,8 @@ int8_t PdxInstanceImpl::m_ObjectDefaultBytes[] = {
     static_cast<int8_t>(apache::geode::client::DSCode::NullObj)};
 int8_t PdxInstanceImpl::m_NULLARRAYDefaultBytes[] = {-1};
 std::shared_ptr<PdxFieldType> PdxInstanceImpl::m_DefaultPdxFieldType(
-    new PdxFieldType("default", "default", PdxFieldTypes::UNKNOWN,
-                     -1 /*field index*/, false, 1, -1 /*var len field idx*/));
+    new PdxFieldType("default", PdxFieldTypes::UNKNOWN, -1 /*field index*/,
+                     false, 1, -1 /*var len field idx*/));
 
 bool sortFunc(std::shared_ptr<PdxFieldType> field1,
               std::shared_ptr<PdxFieldType> field2) {

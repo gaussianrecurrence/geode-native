@@ -31,8 +31,7 @@ class PdxReaderWithTypeCollector : public PdxLocalReader {
  private:
   std::shared_ptr<PdxType> m_newPdxType;
 
-  void checkType(const std::string& fieldName, PdxFieldTypes typeId,
-                 const std::string& fieldType);
+  void checkType(const std::string& fieldName, PdxFieldTypes typeId);
 
  public:
   PdxReaderWithTypeCollector(DataInput& dataInput,

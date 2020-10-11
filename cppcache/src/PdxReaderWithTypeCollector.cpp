@@ -43,21 +43,20 @@ PdxReaderWithTypeCollector::PdxReaderWithTypeCollector(
 PdxReaderWithTypeCollector::~PdxReaderWithTypeCollector() {}
 
 void PdxReaderWithTypeCollector::checkType(const std::string& fieldName,
-                                           PdxFieldTypes typeId,
-                                           const std::string& fieldType) {
+                                           PdxFieldTypes typeId) {
   auto pft = m_pdxType->getPdxField(fieldName);
   if (pft != nullptr) {
     if (typeId != pft->getTypeId()) {
-      throw IllegalStateException("Expected " + fieldType +
-                                  " fieldType field but found field of type " +
-                                  pft->toString().c_str());
+      throw IllegalStateException(
+          "Expected typeId " + std::to_string(static_cast<size_t>(typeId)) +
+          " fieldType field but found field of type " + pft->toString());
     }
   }
 }
 
 char16_t PdxReaderWithTypeCollector::readChar(const std::string& fieldName) {
-  checkType(fieldName, PdxFieldTypes::CHAR, "char");
-  m_newPdxType->addFixedLengthTypeField(fieldName, "char", PdxFieldTypes::CHAR,
+  checkType(fieldName, PdxFieldTypes::CHAR);
+  m_newPdxType->addFixedLengthTypeField(fieldName, PdxFieldTypes::CHAR,
                                         PdxTypes::CHAR_SIZE);
   int position = m_pdxType->getFieldPosition(fieldName, m_offsetsBuffer,
                                              m_offsetSize, m_serializedLength);
@@ -73,9 +72,9 @@ char16_t PdxReaderWithTypeCollector::readChar(const std::string& fieldName) {
 }
 
 bool PdxReaderWithTypeCollector::readBoolean(const std::string& fieldName) {
-  checkType(fieldName, PdxFieldTypes::BOOLEAN, "boolean");
-  m_newPdxType->addFixedLengthTypeField(
-      fieldName, "boolean", PdxFieldTypes::BOOLEAN, PdxTypes::BOOLEAN_SIZE);
+  checkType(fieldName, PdxFieldTypes::BOOLEAN);
+  m_newPdxType->addFixedLengthTypeField(fieldName, PdxFieldTypes::BOOLEAN,
+                                        PdxTypes::BOOLEAN_SIZE);
   int position = m_pdxType->getFieldPosition(fieldName, m_offsetsBuffer,
                                              m_offsetSize, m_serializedLength);
   LOGDEBUG("PdxReaderWithTypeCollector::readBoolean():position = %d", position);
@@ -90,8 +89,8 @@ bool PdxReaderWithTypeCollector::readBoolean(const std::string& fieldName) {
 }
 
 int8_t PdxReaderWithTypeCollector::readByte(const std::string& fieldName) {
-  checkType(fieldName, PdxFieldTypes::BYTE, "byte");
-  m_newPdxType->addFixedLengthTypeField(fieldName, "byte", PdxFieldTypes::BYTE,
+  checkType(fieldName, PdxFieldTypes::BYTE);
+  m_newPdxType->addFixedLengthTypeField(fieldName, PdxFieldTypes::BYTE,
                                         PdxTypes::BYTE_SIZE);
   int position = m_pdxType->getFieldPosition(fieldName, m_offsetsBuffer,
                                              m_offsetSize, m_serializedLength);
@@ -108,9 +107,9 @@ int8_t PdxReaderWithTypeCollector::readByte(const std::string& fieldName) {
 }
 
 int16_t PdxReaderWithTypeCollector::readShort(const std::string& fieldName) {
-  checkType(fieldName, PdxFieldTypes::SHORT, "short");
-  m_newPdxType->addFixedLengthTypeField(
-      fieldName, "short", PdxFieldTypes::SHORT, PdxTypes::SHORT_SIZE);
+  checkType(fieldName, PdxFieldTypes::SHORT);
+  m_newPdxType->addFixedLengthTypeField(fieldName, PdxFieldTypes::SHORT,
+                                        PdxTypes::SHORT_SIZE);
   int position = m_pdxType->getFieldPosition(fieldName, m_offsetsBuffer,
                                              m_offsetSize, m_serializedLength);
   LOGDEBUG("PdxReaderWithTypeCollector::readShort(): position = %d", position);
@@ -126,8 +125,8 @@ int16_t PdxReaderWithTypeCollector::readShort(const std::string& fieldName) {
 }
 
 int32_t PdxReaderWithTypeCollector::readInt(const std::string& fieldName) {
-  checkType(fieldName, PdxFieldTypes::INT, "int");
-  m_newPdxType->addFixedLengthTypeField(fieldName, "int", PdxFieldTypes::INT,
+  checkType(fieldName, PdxFieldTypes::INT);
+  m_newPdxType->addFixedLengthTypeField(fieldName, PdxFieldTypes::INT,
                                         PdxTypes::INTEGER_SIZE);
   int position = m_pdxType->getFieldPosition(fieldName, m_offsetsBuffer,
                                              m_offsetSize, m_serializedLength);
@@ -144,8 +143,8 @@ int32_t PdxReaderWithTypeCollector::readInt(const std::string& fieldName) {
 }
 
 int64_t PdxReaderWithTypeCollector::readLong(const std::string& fieldName) {
-  checkType(fieldName, PdxFieldTypes::LONG, "long");
-  m_newPdxType->addFixedLengthTypeField(fieldName, "long", PdxFieldTypes::LONG,
+  checkType(fieldName, PdxFieldTypes::LONG);
+  m_newPdxType->addFixedLengthTypeField(fieldName, PdxFieldTypes::LONG,
                                         PdxTypes::LONG_SIZE);
   int position = m_pdxType->getFieldPosition(fieldName, m_offsetsBuffer,
                                              m_offsetSize, m_serializedLength);
@@ -162,9 +161,9 @@ int64_t PdxReaderWithTypeCollector::readLong(const std::string& fieldName) {
 }
 
 float PdxReaderWithTypeCollector::readFloat(const std::string& fieldName) {
-  checkType(fieldName, PdxFieldTypes::FLOAT, "float");
-  m_newPdxType->addFixedLengthTypeField(
-      fieldName, "float", PdxFieldTypes::FLOAT, PdxTypes::FLOAT_SIZE);
+  checkType(fieldName, PdxFieldTypes::FLOAT);
+  m_newPdxType->addFixedLengthTypeField(fieldName, PdxFieldTypes::FLOAT,
+                                        PdxTypes::FLOAT_SIZE);
   int position = m_pdxType->getFieldPosition(fieldName, m_offsetsBuffer,
                                              m_offsetSize, m_serializedLength);
   LOGDEBUG("PdxReaderWithTypeCollector::readFloat():position = %d", position);
@@ -180,9 +179,9 @@ float PdxReaderWithTypeCollector::readFloat(const std::string& fieldName) {
 }
 
 double PdxReaderWithTypeCollector::readDouble(const std::string& fieldName) {
-  checkType(fieldName, PdxFieldTypes::DOUBLE, "double");
-  m_newPdxType->addFixedLengthTypeField(
-      fieldName, "double", PdxFieldTypes::DOUBLE, PdxTypes::DOUBLE_SIZE);
+  checkType(fieldName, PdxFieldTypes::DOUBLE);
+  m_newPdxType->addFixedLengthTypeField(fieldName, PdxFieldTypes::DOUBLE,
+                                        PdxTypes::DOUBLE_SIZE);
   int position = m_pdxType->getFieldPosition(fieldName, m_offsetsBuffer,
                                              m_offsetSize, m_serializedLength);
   LOGDEBUG("PdxReaderWithTypeCollector::readDouble():position = %d", position);
@@ -199,9 +198,8 @@ double PdxReaderWithTypeCollector::readDouble(const std::string& fieldName) {
 
 std::string PdxReaderWithTypeCollector::readString(
     const std::string& fieldName) {
-  checkType(fieldName, PdxFieldTypes::STRING, "String");
-  m_newPdxType->addVariableLengthTypeField(fieldName, "String",
-                                           PdxFieldTypes::STRING);
+  checkType(fieldName, PdxFieldTypes::STRING);
+  m_newPdxType->addVariableLengthTypeField(fieldName, PdxFieldTypes::STRING);
   int32_t position = m_pdxType->getFieldPosition(
       fieldName, m_offsetsBuffer, m_offsetSize, m_serializedLength);
   LOGDEBUG("PdxReaderWithTypeCollector::readString():position = %d", position);
@@ -222,7 +220,7 @@ std::string PdxReaderWithTypeCollector::readString(
 std::shared_ptr<Serializable> PdxReaderWithTypeCollector::readObject(
     const std::string& fieldName) {
   // field is collected after reading
-  checkType(fieldName, PdxFieldTypes::OBJECT, "Serializable");
+  checkType(fieldName, PdxFieldTypes::OBJECT);
   int position = m_pdxType->getFieldPosition(fieldName, m_offsetsBuffer,
                                              m_offsetSize, m_serializedLength);
   LOGDEBUG("PdxReaderWithTypeCollector::readObject():position = %d", position);
@@ -231,8 +229,7 @@ std::shared_ptr<Serializable> PdxReaderWithTypeCollector::readObject(
     m_dataInput->advanceCursor(position);
     const uint8_t* startLoc = m_dataInput->currentBufferPosition();
     ptr = PdxLocalReader::readObject(fieldName);
-    m_newPdxType->addVariableLengthTypeField(fieldName, "Serializable",
-                                             PdxFieldTypes::OBJECT);
+    m_newPdxType->addVariableLengthTypeField(fieldName, PdxFieldTypes::OBJECT);
     auto strSize = m_dataInput->currentBufferPosition() - startLoc;
     m_dataInput->rewindCursor(strSize + position);
     startLoc = nullptr;
@@ -244,8 +241,8 @@ std::shared_ptr<Serializable> PdxReaderWithTypeCollector::readObject(
 
 std::vector<char16_t> PdxReaderWithTypeCollector::readCharArray(
     const std::string& fieldName) {
-  checkType(fieldName, PdxFieldTypes::CHAR_ARRAY, "char[]");
-  m_newPdxType->addVariableLengthTypeField(fieldName, "char[]",
+  checkType(fieldName, PdxFieldTypes::CHAR_ARRAY);
+  m_newPdxType->addVariableLengthTypeField(fieldName,
                                            PdxFieldTypes::CHAR_ARRAY);
   int position = m_pdxType->getFieldPosition(fieldName, m_offsetsBuffer,
                                              m_offsetSize, m_serializedLength);
@@ -265,8 +262,8 @@ std::vector<char16_t> PdxReaderWithTypeCollector::readCharArray(
 
 std::vector<bool> PdxReaderWithTypeCollector::readBooleanArray(
     const std::string& fieldName) {
-  checkType(fieldName, PdxFieldTypes::BOOLEAN_ARRAY, "boolean[]");
-  m_newPdxType->addVariableLengthTypeField(fieldName, "boolean[]",
+  checkType(fieldName, PdxFieldTypes::BOOLEAN_ARRAY);
+  m_newPdxType->addVariableLengthTypeField(fieldName,
                                            PdxFieldTypes::BOOLEAN_ARRAY);
   LOGDEBUG("NIL:293: PdxReaderWithTypeCollector::readBooleanArray Test-1");
   int position = m_pdxType->getFieldPosition(fieldName, m_offsetsBuffer,
@@ -289,8 +286,8 @@ std::vector<bool> PdxReaderWithTypeCollector::readBooleanArray(
 
 std::vector<int8_t> PdxReaderWithTypeCollector::readByteArray(
     const std::string& fieldName) {
-  checkType(fieldName, PdxFieldTypes::BYTE_ARRAY, "byte[]");
-  m_newPdxType->addVariableLengthTypeField(fieldName, "byte[]",
+  checkType(fieldName, PdxFieldTypes::BYTE_ARRAY);
+  m_newPdxType->addVariableLengthTypeField(fieldName,
                                            PdxFieldTypes::BYTE_ARRAY);
   int position = m_pdxType->getFieldPosition(fieldName, m_offsetsBuffer,
                                              m_offsetSize, m_serializedLength);
@@ -310,8 +307,8 @@ std::vector<int8_t> PdxReaderWithTypeCollector::readByteArray(
 
 std::vector<int16_t> PdxReaderWithTypeCollector::readShortArray(
     const std::string& fieldName) {
-  checkType(fieldName, PdxFieldTypes::SHORT_ARRAY, "short[]");
-  m_newPdxType->addVariableLengthTypeField(fieldName, "short[]",
+  checkType(fieldName, PdxFieldTypes::SHORT_ARRAY);
+  m_newPdxType->addVariableLengthTypeField(fieldName,
                                            PdxFieldTypes::SHORT_ARRAY);
   int position = m_pdxType->getFieldPosition(fieldName, m_offsetsBuffer,
                                              m_offsetSize, m_serializedLength);
@@ -331,9 +328,8 @@ std::vector<int16_t> PdxReaderWithTypeCollector::readShortArray(
 
 std::vector<int32_t> PdxReaderWithTypeCollector::readIntArray(
     const std::string& fieldName) {
-  checkType(fieldName, PdxFieldTypes::INT_ARRAY, "int[]");
-  m_newPdxType->addVariableLengthTypeField(fieldName, "int[]",
-                                           PdxFieldTypes::INT_ARRAY);
+  checkType(fieldName, PdxFieldTypes::INT_ARRAY);
+  m_newPdxType->addVariableLengthTypeField(fieldName, PdxFieldTypes::INT_ARRAY);
   int position = m_pdxType->getFieldPosition(fieldName, m_offsetsBuffer,
                                              m_offsetSize, m_serializedLength);
   LOGDEBUG("PdxReaderWithTypeCollector::readIntArray():position = %d",
@@ -352,8 +348,8 @@ std::vector<int32_t> PdxReaderWithTypeCollector::readIntArray(
 
 std::vector<int64_t> PdxReaderWithTypeCollector::readLongArray(
     const std::string& fieldName) {
-  checkType(fieldName, PdxFieldTypes::LONG_ARRAY, "long[]");
-  m_newPdxType->addVariableLengthTypeField(fieldName, "long[]",
+  checkType(fieldName, PdxFieldTypes::LONG_ARRAY);
+  m_newPdxType->addVariableLengthTypeField(fieldName,
                                            PdxFieldTypes::LONG_ARRAY);
   int position = m_pdxType->getFieldPosition(fieldName, m_offsetsBuffer,
                                              m_offsetSize, m_serializedLength);
@@ -373,8 +369,8 @@ std::vector<int64_t> PdxReaderWithTypeCollector::readLongArray(
 
 std::vector<float> PdxReaderWithTypeCollector::readFloatArray(
     const std::string& fieldName) {
-  checkType(fieldName, PdxFieldTypes::FLOAT_ARRAY, "float[]");
-  m_newPdxType->addVariableLengthTypeField(fieldName, "float[]",
+  checkType(fieldName, PdxFieldTypes::FLOAT_ARRAY);
+  m_newPdxType->addVariableLengthTypeField(fieldName,
                                            PdxFieldTypes::FLOAT_ARRAY);
   int position = m_pdxType->getFieldPosition(fieldName, m_offsetsBuffer,
                                              m_offsetSize, m_serializedLength);
@@ -394,8 +390,8 @@ std::vector<float> PdxReaderWithTypeCollector::readFloatArray(
 
 std::vector<double> PdxReaderWithTypeCollector::readDoubleArray(
     const std::string& fieldName) {
-  checkType(fieldName, PdxFieldTypes::DOUBLE_ARRAY, "double[]");
-  m_newPdxType->addVariableLengthTypeField(fieldName, "double[]",
+  checkType(fieldName, PdxFieldTypes::DOUBLE_ARRAY);
+  m_newPdxType->addVariableLengthTypeField(fieldName,
                                            PdxFieldTypes::DOUBLE_ARRAY);
   int position = m_pdxType->getFieldPosition(fieldName, m_offsetsBuffer,
                                              m_offsetSize, m_serializedLength);
@@ -415,8 +411,8 @@ std::vector<double> PdxReaderWithTypeCollector::readDoubleArray(
 
 std::vector<std::string> PdxReaderWithTypeCollector::readStringArray(
     const std::string& fieldName) {
-  checkType(fieldName, PdxFieldTypes::STRING_ARRAY, "String[]");
-  m_newPdxType->addVariableLengthTypeField(fieldName, "String[]",
+  checkType(fieldName, PdxFieldTypes::STRING_ARRAY);
+  m_newPdxType->addVariableLengthTypeField(fieldName,
                                            PdxFieldTypes::STRING_ARRAY);
   auto position = m_pdxType->getFieldPosition(fieldName, m_offsetsBuffer,
                                               m_offsetSize, m_serializedLength);
@@ -438,8 +434,8 @@ std::vector<std::string> PdxReaderWithTypeCollector::readStringArray(
 
 std::shared_ptr<CacheableObjectArray>
 PdxReaderWithTypeCollector::readObjectArray(const std::string& fieldName) {
-  checkType(fieldName, PdxFieldTypes::OBJECT_ARRAY, "Object[]");
-  m_newPdxType->addVariableLengthTypeField(fieldName, "Object[]",
+  checkType(fieldName, PdxFieldTypes::OBJECT_ARRAY);
+  m_newPdxType->addVariableLengthTypeField(fieldName,
                                            PdxFieldTypes::OBJECT_ARRAY);
   int position = m_pdxType->getFieldPosition(fieldName, m_offsetsBuffer,
                                              m_offsetSize, m_serializedLength);
@@ -461,8 +457,8 @@ PdxReaderWithTypeCollector::readObjectArray(const std::string& fieldName) {
 int8_t** PdxReaderWithTypeCollector::readArrayOfByteArrays(
     const std::string& fieldName, int32_t& arrayLength,
     int32_t** elementLength) {
-  checkType(fieldName, PdxFieldTypes::ARRAY_OF_BYTE_ARRAYS, "byte[][]");
-  m_newPdxType->addVariableLengthTypeField(fieldName, "byte[][]",
+  checkType(fieldName, PdxFieldTypes::ARRAY_OF_BYTE_ARRAYS);
+  m_newPdxType->addVariableLengthTypeField(fieldName,
                                            PdxFieldTypes::ARRAY_OF_BYTE_ARRAYS);
   int position = m_pdxType->getFieldPosition(fieldName, m_offsetsBuffer,
                                              m_offsetSize, m_serializedLength);
@@ -484,8 +480,8 @@ int8_t** PdxReaderWithTypeCollector::readArrayOfByteArrays(
 
 std::shared_ptr<CacheableDate> PdxReaderWithTypeCollector::readDate(
     const std::string& fieldName) {
-  checkType(fieldName, PdxFieldTypes::DATE, "Date");
-  m_newPdxType->addFixedLengthTypeField(fieldName, "Date", PdxFieldTypes::DATE,
+  checkType(fieldName, PdxFieldTypes::DATE);
+  m_newPdxType->addFixedLengthTypeField(fieldName, PdxFieldTypes::DATE,
                                         PdxTypes::DATE_SIZE);
   int position = m_pdxType->getFieldPosition(fieldName, m_offsetsBuffer,
                                              m_offsetSize, m_serializedLength);

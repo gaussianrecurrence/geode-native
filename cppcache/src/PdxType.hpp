@@ -179,11 +179,9 @@ class PdxType : public internal::DataSerializableInternal,
   }
 
   void addFixedLengthTypeField(const std::string& fieldName,
-                               const std::string& className,
                                PdxFieldTypes typeId, int32_t size);
 
   void addVariableLengthTypeField(const std::string& fieldName,
-                                  const std::string& className,
                                   PdxFieldTypes typeId);
   void InitializeType();
 
@@ -220,7 +218,7 @@ struct hash<apache::geode::client::PdxType> {
 
     for (auto entry : val.getFieldNameVsPdxType()) {
       auto pdxPtr = entry.second;
-      result = result ^ (strHash(pdxPtr->getClassName()) << 1);
+      result = result ^ (static_cast<uint32_t>(pdxPtr->getTypeId()) << 1);
       result = result ^ (strHash(pdxPtr->getFieldName()) << 1);
     }
 

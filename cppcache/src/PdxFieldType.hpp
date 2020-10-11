@@ -38,7 +38,6 @@ class APACHE_GEODE_EXPORT PdxFieldType
     : public internal::DataSerializableInternal {
  private:
   std::string m_fieldName;
-  std::string m_className;
   PdxFieldTypes m_typeId;
   uint32_t m_sequenceId;
 
@@ -53,16 +52,13 @@ class APACHE_GEODE_EXPORT PdxFieldType
   int32_t getFixedTypeSize() const;
 
  public:
-  PdxFieldType(std::string fieldName, std::string className,
-               PdxFieldTypes typeId, int32_t sequenceId,
+  PdxFieldType(std::string fieldName, PdxFieldTypes typeId, int32_t sequenceId,
                bool isVariableLengthType, int32_t fixedSize,
                int32_t varLenFieldIdx);
 
   PdxFieldType();
 
   inline const std::string& getFieldName() { return m_fieldName; }
-
-  inline const std::string& getClassName() { return m_className; }
 
   inline PdxFieldTypes getTypeId() { return m_typeId; }
 
@@ -91,7 +87,6 @@ class APACHE_GEODE_EXPORT PdxFieldType
 
   virtual size_t objectSize() const override {
     auto size = sizeof(PdxFieldType);
-    size += m_className.length();
     size += m_fieldName.length();
     return size;
   }

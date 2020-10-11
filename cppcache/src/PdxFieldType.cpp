@@ -59,7 +59,6 @@ static const int32_t kFixedTypeSizes[] = {
 PdxFieldType::PdxFieldType()
     : Serializable(),
       m_fieldName(),
-      m_className(),
       m_typeId(PdxFieldTypes::UNKNOWN),
       m_sequenceId(0),
       m_isVariableLengthType(false),
@@ -69,13 +68,11 @@ PdxFieldType::PdxFieldType()
       m_vlOffsetIndex(0),
       m_relativeOffset(0) {}
 
-PdxFieldType::PdxFieldType(std::string fieldName, std::string className,
-                           PdxFieldTypes typeId, int32_t sequenceId,
-                           bool isVariableLengthType, int32_t fixedSize,
-                           int32_t varLenFieldIdx)
+PdxFieldType::PdxFieldType(std::string fieldName, PdxFieldTypes typeId,
+                           int32_t sequenceId, bool isVariableLengthType,
+                           int32_t fixedSize, int32_t varLenFieldIdx)
     : Serializable(),
       m_fieldName(fieldName),
-      m_className(className),
       m_typeId(typeId),
       m_sequenceId(sequenceId),
       m_isVariableLengthType(isVariableLengthType),
@@ -149,15 +146,7 @@ std::string PdxFieldType::toString() const {
 }
 
 bool PdxFieldType::operator==(const PdxFieldType& other) const {
-  if (m_className != other.m_className) {
-    return false;
-  }
-
-  if (m_fieldName != other.m_fieldName) {
-    return false;
-  }
-
-  return true;
+  return m_typeId == other.m_typeId && m_fieldName == other.m_fieldName;
 }
 
 bool PdxFieldType::operator!=(const PdxFieldType& other) const {

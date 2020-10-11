@@ -120,21 +120,19 @@ void PdxType::fromData(DataInput& input) {
 }
 
 void PdxType::addFixedLengthTypeField(const std::string& fieldName,
-                                      const std::string& className,
                                       PdxFieldTypes typeId, int32_t size) {
   if (m_fieldNameVsPdxType.find(fieldName) != m_fieldNameVsPdxType.end()) {
     throw IllegalStateException("Field: " + fieldName +
                                 " is already added to PdxWriter");
   }
   auto pfxPtr = std::make_shared<PdxFieldType>(
-      fieldName, className, typeId,
-      static_cast<int32_t>(m_pdxFieldTypes->size()), false, size, 0);
+      fieldName, typeId, static_cast<int32_t>(m_pdxFieldTypes->size()), false,
+      size, 0);
   m_pdxFieldTypes->push_back(pfxPtr);
   m_fieldNameVsPdxType[fieldName] = pfxPtr;
 }
 
 void PdxType::addVariableLengthTypeField(const std::string& fieldName,
-                                         const std::string& className,
                                          PdxFieldTypes typeId) {
   if (m_fieldNameVsPdxType.find(fieldName) != m_fieldNameVsPdxType.end()) {
     throw IllegalStateException("Field: " + fieldName +
@@ -148,9 +146,8 @@ void PdxType::addVariableLengthTypeField(const std::string& fieldName,
   m_numberOfVarLenFields++;
   m_isVarLenFieldAdded = true;
   auto pfxPtr = std::make_shared<PdxFieldType>(
-      fieldName, className, typeId,
-      static_cast<int32_t>(m_pdxFieldTypes->size()), true, -1,
-      m_varLenFieldIdx);
+      fieldName, typeId, static_cast<int32_t>(m_pdxFieldTypes->size()), true,
+      -1, m_varLenFieldIdx);
   m_pdxFieldTypes->push_back(pfxPtr);
   m_fieldNameVsPdxType[fieldName] = pfxPtr;
 }
@@ -462,7 +459,7 @@ std::shared_ptr<PdxType> PdxType::mergeVersion(
     }
     if (!found) {
       auto newFt = std::make_shared<PdxFieldType>(
-          (*it)->getFieldName(), (*it)->getClassName(), (*it)->getTypeId(),
+          (*it)->getFieldName(), (*it)->getTypeId(),
           static_cast<int32_t>(newone->m_pdxFieldTypes->size()),  // sequence id
           (*it)->IsVariableLengthType(), (*it)->getFixedSize(),
           ((*it)->IsVariableLengthType()
