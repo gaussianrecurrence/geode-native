@@ -70,84 +70,100 @@ bool PdxTests::PdxType::generic2DCompare(T1** value1, T2** value2, int length,
 //}
 
 void PdxTests::PdxType::toData(PdxWriter& pw) const {
-  std::vector<int> lengths(2);
+  int lengths[2] = {1, 2};
 
-  lengths[0] = 1;
-  lengths[1] = 2;
-  pw.writeArrayOfByteArrays("m_byteByteArray", m_byteByteArray, 2,
-                            lengths.data());
   pw.writeChar("m_char", m_char);
   pw.markIdentityField("m_char");
+  pw.writeCharArray("m_charArray", m_charArray);
+  pw.markIdentityField("m_charArray");
+
   pw.writeBoolean("m_bool", m_bool);  // 1
   pw.markIdentityField("m_bool");
   pw.writeBooleanArray("m_boolArray", m_boolArray);
   pw.markIdentityField("m_boolArray");
-  pw.writeByte("m_byte", m_byte);
-  pw.markIdentityField("m_byte");
-  pw.writeByteArray("m_byteArray", m_byteArray);
-  pw.markIdentityField("m_byteArray");
-  pw.writeCharArray("m_charArray", m_charArray);
-  pw.markIdentityField("m_charArray");
-  pw.writeObject("m_arraylist", m_arraylist);
-  pw.writeObject("m_linkedlist", m_linkedlist);
-  pw.markIdentityField("m_arraylist");
-  pw.writeObject("m_map", m_map);
-  pw.markIdentityField("m_map");
-  pw.writeObject("m_hashtable", m_hashtable);
-  pw.markIdentityField("m_hashtable");
-  pw.writeObject("m_vector", m_vector);
-  pw.markIdentityField("m_vector");
-  pw.writeObject("m_chs", m_chs);
-  pw.markIdentityField("m_chs");
-  pw.writeObject("m_clhs", m_clhs);
-  pw.markIdentityField("m_clhs");
-  pw.writeString("m_string", m_string);
-  pw.markIdentityField("m_string");
-  pw.writeDate("m_dateTime", m_date);
-  pw.markIdentityField("m_dateTime");
-  pw.writeDouble("m_double", m_double);
-  pw.markIdentityField("m_double");
-  pw.writeDoubleArray("m_doubleArray", m_doubleArray);
-  pw.markIdentityField("m_doubleArray");
-  pw.writeFloat("m_float", m_float);
-  pw.markIdentityField("m_float");
-  pw.writeFloatArray("m_floatArray", m_floatArray);
-  pw.markIdentityField("m_floatArray");
-  pw.writeShort("m_int16", m_int16);
-  pw.markIdentityField("m_int16");
-  pw.writeInt("m_int32", m_int32);
-  pw.markIdentityField("m_int32");
-  pw.writeLong("m_long", m_long);
-  pw.markIdentityField("m_long");
-  pw.writeIntArray("m_int32Array", m_int32Array);
-  pw.markIdentityField("m_int32Array");
-  pw.writeLongArray("m_longArray", m_longArray);
-  pw.markIdentityField("m_longArray");
-  pw.writeShortArray("m_int16Array", m_int16Array);
-  pw.markIdentityField("m_int16Array");
+
   pw.writeByte("m_sbyte", m_sbyte);
   pw.markIdentityField("m_sbyte");
   pw.writeByteArray("m_sbyteArray", m_sbyteArray);
   pw.markIdentityField("m_sbyteArray");
 
-  // int* strlengthArr = new int[2];
+  pw.writeByte("m_byte", m_byte);
+  pw.markIdentityField("m_byte");
+  pw.writeByteArray("m_byteArray", m_byteArray);
+  pw.markIdentityField("m_byteArray");
+  pw.writeArrayOfByteArrays("m_byteByteArray", m_byteByteArray, 2, lengths);
+  pw.markIdentityField("m_byteByteArray");
 
-  // strlengthArr[0] = 5;
-  // strlengthArr[1] = 5;
-  pw.writeStringArray("m_stringArray", m_stringArray);
-  pw.markIdentityField("m_stringArray");
+  pw.writeShort("m_int16", m_int16);
+  pw.markIdentityField("m_int16");
+  pw.writeShortArray("m_int16Array", m_int16Array);
+  pw.markIdentityField("m_int16Array");
+
+  pw.writeInt("m_int32", m_int32);
+  pw.markIdentityField("m_int32");
+  pw.writeIntArray("m_int32Array", m_int32Array);
+  pw.markIdentityField("m_int32Array");
+
+  pw.writeLong("m_long", m_long);
+  pw.markIdentityField("m_long");
+  pw.writeLongArray("m_longArray", m_longArray);
+  pw.markIdentityField("m_longArray");
+
+  pw.writeFloat("m_float", m_float);
+  pw.markIdentityField("m_float");
+  pw.writeFloatArray("m_floatArray", m_floatArray);
+  pw.markIdentityField("m_floatArray");
+
+  pw.writeDouble("m_double", m_double);
+  pw.markIdentityField("m_double");
+  pw.writeDoubleArray("m_doubleArray", m_doubleArray);
+  pw.markIdentityField("m_doubleArray");
+
   pw.writeShort("m_uint16", m_uint16);
   pw.markIdentityField("m_uint16");
-  pw.writeInt("m_uint32", m_uint32);
-  pw.markIdentityField("m_uint32");
-  pw.writeLong("m_ulong", m_ulong);
-  pw.markIdentityField("m_ulong");
-  pw.writeIntArray("m_uint32Array", m_uint32Array);
-  pw.markIdentityField("m_uint32Array");
-  pw.writeLongArray("m_ulongArray", m_ulongArray);
-  pw.markIdentityField("m_ulongArray");
   pw.writeShortArray("m_uint16Array", m_uint16Array);
   pw.markIdentityField("m_uint16Array");
+
+  pw.writeInt("m_uint32", m_uint32);
+  pw.markIdentityField("m_uint32");
+  pw.writeIntArray("m_uint32Array", m_uint32Array);
+  pw.markIdentityField("m_uint32Array");
+
+  pw.writeLong("m_ulong", m_ulong);
+  pw.markIdentityField("m_ulong");
+  pw.writeLongArray("m_ulongArray", m_ulongArray);
+  pw.markIdentityField("m_ulongArray");
+
+  pw.writeString("m_string", m_string);
+  pw.markIdentityField("m_string");
+  pw.writeStringArray("m_stringArray", m_stringArray);
+  pw.markIdentityField("m_stringArray");
+
+  pw.writeObject("m_pdxEnum", m_pdxEnum);
+  pw.markIdentityField("m_pdxEnum");
+  pw.writeDate("m_dateTime", m_date);
+  pw.markIdentityField("m_dateTime");
+
+  pw.writeObject("m_arraylist", m_arraylist);
+  pw.markIdentityField("m_arraylist");
+  pw.writeObject("m_vector", m_vector);
+  pw.markIdentityField("m_vector");
+  pw.writeObject("m_linkedlist", m_linkedlist);
+  pw.markIdentityField("m_linkedlist");
+
+  pw.writeObject("m_chs", m_chs);
+  pw.markIdentityField("m_chs");
+  pw.writeObject("m_clhs", m_clhs);
+  pw.markIdentityField("m_clhs");
+
+  pw.writeObject("m_map", m_map);
+  pw.markIdentityField("m_map");
+  pw.writeObject("m_hashtable", m_hashtable);
+  pw.markIdentityField("m_hashtable");
+
+  pw.writeObjectArray("", m_objectArrayEmptyPdxFieldName);
+  pw.writeObjectArray("m_objectArray", m_objectArray);
+  pw.writeObject("m_address", m_objectArray);
 
   pw.writeByteArray("m_byte252", m_byte252);
   pw.markIdentityField("m_byte252");
@@ -158,13 +174,6 @@ void PdxTests::PdxType::toData(PdxWriter& pw) const {
   pw.writeByteArray("m_byte65536", m_byte65536);
   pw.markIdentityField("m_byte65536");
 
-  pw.writeObject("m_pdxEnum", m_pdxEnum);
-  pw.markIdentityField("m_pdxEnum");
-  pw.writeObject("m_address", m_objectArray);
-
-  pw.writeObjectArray("m_objectArray", m_objectArray);
-  pw.writeObjectArray("", m_objectArrayEmptyPdxFieldName);
-
   LOGDEBUG("PdxObject::writeObject() for enum Done......");
 
   LOGDEBUG("PdxObject::toData() Done......");
@@ -174,87 +183,84 @@ void PdxTests::PdxType::fromData(PdxReader& pr) {
   int32_t* Lengtharr;
   int32_t arrLen = 0;
   deleteByteByteArray();
+
+  m_char = pr.readChar("m_char");
+  m_charArray = pr.readCharArray("m_charArray");
+
+  m_bool = pr.readBoolean("m_bool");
+  m_boolArray = pr.readBooleanArray("m_boolArray");
+
+  m_sbyte = pr.readByte("m_sbyte");
+  m_sbyteArray = pr.readByteArray("m_sbyteArray");
+
+  m_byte = pr.readByte("m_byte");
+  m_byteArray = pr.readByteArray("m_byteArray");
   m_byteByteArray =
       pr.readArrayOfByteArrays("m_byteByteArray", arrLen, &Lengtharr);
   _GEODE_SAFE_DELETE_ARRAY(Lengtharr);
   // TODO::need to write compareByteByteArray() and check for m_byteByteArray
   // elements
 
-  m_char = pr.readChar("m_char");
-  // GenericValCompare
+  m_int16 = pr.readShort("m_int16");
+  m_int16Array = pr.readShortArray("m_int16Array");
 
-  m_bool = pr.readBoolean("m_bool");
-  // GenericValCompare
-  m_boolArray = pr.readBooleanArray("m_boolArray");
+  m_int32 = pr.readInt("m_int32");
+  m_int32Array = pr.readIntArray("m_int32Array");
 
-  m_byte = pr.readByte("m_byte");
-  m_byteArray = pr.readByteArray("m_byteArray");
-  m_charArray = pr.readCharArray("m_charArray");
+  m_long = pr.readLong("m_long");
+  m_longArray = pr.readLongArray("m_longArray");
+
+  m_float = pr.readFloat("m_float");
+  m_floatArray = pr.readFloatArray("m_floatArray");
+
+  m_double = pr.readDouble("m_double");
+  m_doubleArray = pr.readDoubleArray("m_doubleArray");
+
+  m_uint16 = pr.readShort("m_uint16");
+  m_uint16Array = pr.readShortArray("m_uint16Array");
+
+  m_uint32 = pr.readInt("m_uint32");
+  m_uint32Array = pr.readIntArray("m_uint32Array");
+
+  m_ulong = pr.readLong("m_ulong");
+  m_ulongArray = pr.readLongArray("m_ulongArray");
+
+  m_string = pr.readString("m_string");
+  m_stringArray = pr.readStringArray("m_stringArray");
+
+  m_pdxEnum = pr.readObject("m_pdxEnum");
+  m_date = pr.readDate("m_dateTime");
 
   m_arraylist = std::dynamic_pointer_cast<CacheableArrayList>(
       pr.readObject("m_arraylist"));
-  m_linkedlist = std::dynamic_pointer_cast<CacheableLinkedList>(
-      pr.readObject("m_linkedlist"));
-  m_map = std::dynamic_pointer_cast<CacheableHashMap>(pr.readObject("m_map"));
-  // TODO:Check for the size
-
-  m_hashtable = std::dynamic_pointer_cast<CacheableHashTable>(
-      pr.readObject("m_hashtable"));
-  // TODO:Check for the size
-
   m_vector =
       std::dynamic_pointer_cast<CacheableVector>(pr.readObject("m_vector"));
   // TODO::Check for size
+  m_linkedlist = std::dynamic_pointer_cast<CacheableLinkedList>(
+      pr.readObject("m_linkedlist"));
 
   m_chs = std::dynamic_pointer_cast<CacheableHashSet>(pr.readObject("m_chs"));
   // TODO::Size check
-
   m_clhs = std::dynamic_pointer_cast<CacheableLinkedHashSet>(
       pr.readObject("m_clhs"));
   // TODO:Size check
 
-  m_string = pr.readString("m_string");  // GenericValCompare
-  m_date = pr.readDate("m_dateTime");    // compareData
+  m_map = std::dynamic_pointer_cast<CacheableHashMap>(pr.readObject("m_map"));
+  // TODO:Check for the size
+  m_hashtable = std::dynamic_pointer_cast<CacheableHashTable>(
+      pr.readObject("m_hashtable"));
+  // TODO:Check for the size
 
-  m_double = pr.readDouble("m_double");
-
-  m_doubleArray = pr.readDoubleArray("m_doubleArray");
-  m_float = pr.readFloat("m_float");
-  m_floatArray = pr.readFloatArray("m_floatArray");
-  m_int16 = pr.readShort("m_int16");
-  m_int32 = pr.readInt("m_int32");
-  m_long = pr.readLong("m_long");
-  m_int32Array = pr.readIntArray("m_int32Array");
-  m_longArray = pr.readLongArray("m_longArray");
-  m_int16Array = pr.readShortArray("m_int16Array");
-  m_sbyte = pr.readByte("m_sbyte");
-  m_sbyteArray = pr.readByteArray("m_sbyteArray");
-  m_stringArray = pr.readStringArray("m_stringArray");
-  m_uint16 = pr.readShort("m_uint16");
-  m_uint32 = pr.readInt("m_uint32");
-  m_ulong = pr.readLong("m_ulong");
-  m_uint32Array = pr.readIntArray("m_uint32Array");
-  m_ulongArray = pr.readLongArray("m_ulongArray");
-  m_uint16Array = pr.readShortArray("m_uint16Array");
-  // LOGINFO("PdxType::readInt() start...");
+  m_objectArrayEmptyPdxFieldName = pr.readObjectArray("");
+  m_objectArray = pr.readObjectArray("m_objectArray");
+  m_address = pr.readObject("m_address");
+  // TODO:Check for size
 
   m_byte252 = pr.readByteArray("m_byte252");
   m_byte253 = pr.readByteArray("m_byte253");
   m_byte65535 = pr.readByteArray("m_byte65535");
   m_byte65536 = pr.readByteArray("m_byte65536");
   // TODO:Check for size
-
-  m_pdxEnum = pr.readObject("m_pdxEnum");
-
-  m_address = pr.readObject("m_address");
-  // size chaeck
-
-  m_objectArray = pr.readObjectArray("m_objectArray");
-  m_objectArrayEmptyPdxFieldName = pr.readObjectArray("");
-
-  // Check for individual elements
-
-  // TODO:temp added delete it later
 
   LOGINFO("PdxObject::readObject() for enum Done...");
 }

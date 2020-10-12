@@ -66,84 +66,103 @@ std::shared_ptr<Region> setupRegion(Cache& cache) {
 }
 
 void clonePdxInstance(PdxType& source, PdxInstanceFactory& destination) {
-  destination.writeBoolean("m_bool", source.getBool());
-  destination.markIdentityField("m_bool");
-  destination.writeByte("m_byte", source.getByte());
-  destination.markIdentityField("m_byte");
-  destination.writeShort("m_int16", source.getShort());
-  destination.markIdentityField("m_int16");
-  destination.writeInt("m_int32", source.getInt());
-  destination.markIdentityField("m_int32");
-  destination.writeLong("m_long", source.getLong());
-  destination.markIdentityField("m_long");
-  destination.writeFloat("m_float", source.getFloat());
-  destination.markIdentityField("m_float");
-  destination.writeDouble("m_double", source.getDouble());
-  destination.markIdentityField("m_double");
-  destination.writeString("m_string", source.getString());
-  destination.markIdentityField("m_string");
-  destination.writeDate("m_dateTime", source.getDate());
-  destination.markIdentityField("m_dateTime");
-  destination.writeBooleanArray("m_boolArray", source.getBoolArray());
-  destination.markIdentityField("m_boolArray");
-  destination.writeByteArray("m_byteArray", source.getByteArray());
-  destination.markIdentityField("m_byteArray");
-  destination.writeShortArray("m_int16Array", source.getShortArray());
-  destination.markIdentityField("m_int16Array");
-  destination.writeIntArray("m_int32Array", source.getIntArray());
-  destination.markIdentityField("m_int32Array");
-  destination.writeLongArray("m_longArray", source.getLongArray());
-  destination.markIdentityField("m_longArray");
-  destination.writeFloatArray("m_floatArray", source.getFloatArray());
-  destination.markIdentityField("m_floatArray");
-  destination.writeDoubleArray("m_doubleArray", source.getDoubleArray());
-  destination.markIdentityField("m_doubleArray");
-  destination.writeObject("m_map", source.getHashMap());
-  destination.markIdentityField("m_map");
-  destination.writeStringArray("m_stringArray", source.getStringArray());
-  destination.markIdentityField("m_stringArray");
-  destination.writeObjectArray("m_objectArray",
-                               source.getCacheableObjectArray());
-  destination.writeObject("m_pdxEnum", source.getEnum());
-  destination.markIdentityField("m_pdxEnum");
-  destination.writeObject("m_arraylist", source.getArrayList());
-  destination.markIdentityField("m_arraylist");
-  destination.writeObject("m_linkedlist", source.getLinkedList());
-  destination.markIdentityField("m_linkedlist");
-  destination.writeObject("m_hashtable", source.getHashTable());
-  destination.markIdentityField("m_hashtable");
-  destination.writeObject("m_vector", source.getVector());
-  destination.markIdentityField("m_vector");
-
   int lengths[2] = {1, 2};
-  destination.writeArrayOfByteArrays("m_byteByteArray",
-                                     source.getArrayOfByteArrays(), 2, lengths);
 
-  destination.markIdentityField("m_byteByteArray");
   destination.writeChar("m_char", source.getChar());
   destination.markIdentityField("m_char");
   destination.writeCharArray("m_charArray", source.getCharArray());
   destination.markIdentityField("m_charArray");
-  destination.writeObject("m_chs", source.getHashSet());
-  destination.markIdentityField("m_chs");
-  destination.writeObject("m_clhs", source.getLinkedHashSet());
-  destination.markIdentityField("m_clhs");
+
+  destination.writeBoolean("m_bool", source.getBool());
+  destination.markIdentityField("m_bool");
+  destination.writeBooleanArray("m_boolArray", source.getBoolArray());
+  destination.markIdentityField("m_boolArray");
+
   destination.writeByte("m_sbyte", source.getSByte());
   destination.markIdentityField("m_sbyte");
   destination.writeByteArray("m_sbyteArray", source.getSByteArray());
   destination.markIdentityField("m_sbyteArray");
+
+  destination.writeByte("m_byte", source.getByte());
+  destination.markIdentityField("m_byte");
+  destination.writeByteArray("m_byteArray", source.getByteArray());
+  destination.markIdentityField("m_byteArray");
+  destination.writeArrayOfByteArrays("m_byteByteArray",
+                                     source.getArrayOfByteArrays(), 2, lengths);
+  destination.markIdentityField("m_byteByteArray");
+
+  destination.writeShort("m_int16", source.getShort());
+  destination.markIdentityField("m_int16");
+  destination.writeShortArray("m_int16Array", source.getShortArray());
+  destination.markIdentityField("m_int16Array");
+
+  destination.writeInt("m_int32", source.getInt());
+  destination.markIdentityField("m_int32");
+  destination.writeIntArray("m_int32Array", source.getIntArray());
+  destination.markIdentityField("m_int32Array");
+
+  destination.writeLong("m_long", source.getLong());
+  destination.markIdentityField("m_long");
+  destination.writeLongArray("m_longArray", source.getLongArray());
+  destination.markIdentityField("m_longArray");
+
+  destination.writeFloat("m_float", source.getFloat());
+  destination.markIdentityField("m_float");
+  destination.writeFloatArray("m_floatArray", source.getFloatArray());
+  destination.markIdentityField("m_floatArray");
+
+  destination.writeDouble("m_double", source.getDouble());
+  destination.markIdentityField("m_double");
+  destination.writeDoubleArray("m_doubleArray", source.getDoubleArray());
+  destination.markIdentityField("m_doubleArray");
+
   destination.writeShort("m_uint16", source.getUint16());
   destination.markIdentityField("m_uint16");
-  destination.writeInt("m_uint32", source.getUInt());
-  destination.markIdentityField("m_uint32");
-  destination.writeLong("m_ulong", source.getULong());
-  destination.markIdentityField("m_ulong");
   destination.writeShortArray("m_uint16Array", source.getUInt16Array());
   destination.markIdentityField("m_uint16Array");
+
+  destination.writeInt("m_uint32", source.getUInt());
+  destination.markIdentityField("m_uint32");
   destination.writeIntArray("m_uint32Array", source.getUIntArray());
   destination.markIdentityField("m_uint32Array");
+
+  destination.writeLong("m_ulong", source.getULong());
+  destination.markIdentityField("m_ulong");
   destination.writeLongArray("m_ulongArray", source.getULongArray());
   destination.markIdentityField("m_ulongArray");
+
+  destination.writeString("m_string", source.getString());
+  destination.markIdentityField("m_string");
+  destination.writeStringArray("m_stringArray", source.getStringArray());
+  destination.markIdentityField("m_stringArray");
+
+  destination.writeObject("m_pdxEnum", source.getEnum());
+  destination.markIdentityField("m_pdxEnum");
+  destination.writeDate("m_dateTime", source.getDate());
+  destination.markIdentityField("m_dateTime");
+
+  destination.writeObject("m_arraylist", source.getArrayList());
+  destination.markIdentityField("m_arraylist");
+  destination.writeObject("m_vector", source.getVector());
+  destination.markIdentityField("m_vector");
+  destination.writeObject("m_linkedlist", source.getLinkedList());
+  destination.markIdentityField("m_linkedlist");
+
+  destination.writeObject("m_chs", source.getHashSet());
+  destination.markIdentityField("m_chs");
+  destination.writeObject("m_clhs", source.getLinkedHashSet());
+  destination.markIdentityField("m_clhs");
+
+  destination.writeObject("m_map", source.getHashMap());
+  destination.markIdentityField("m_map");
+  destination.writeObject("m_hashtable", source.getHashTable());
+  destination.markIdentityField("m_hashtable");
+
+  destination.writeObjectArray(
+      "", source.getCacheableObjectArrayEmptyPdxFieldName());
+  destination.writeObjectArray("m_objectArray",
+                               source.getCacheableObjectArray());
+  destination.writeObject("m_address", source.getCacheableObjectArray());
 
   destination.writeByteArray("m_byte252", source.getByte252());
   destination.markIdentityField("m_byte252");
@@ -153,10 +172,6 @@ void clonePdxInstance(PdxType& source, PdxInstanceFactory& destination) {
   destination.markIdentityField("m_byte65535");
   destination.writeByteArray("m_byte65536", source.getByte65536());
   destination.markIdentityField("m_byte65536");
-  destination.writeObject("m_address", source.getCacheableObjectArray());
-
-  destination.writeObjectArray(
-      "", source.getCacheableObjectArrayEmptyPdxFieldName());
 }
 
 void clonePdxInstance(ParentPdx& source, PdxInstanceFactory& destination) {
