@@ -47,9 +47,9 @@ class LocalRegion;
  */
 class APACHE_GEODE_EXPORT CacheStatistics {
  public:
-  typedef std::chrono::system_clock::time_point time_point;
+  using time_point = std::chrono::steady_clock::time_point;
 
-  CacheStatistics() : m_lastAccessTime(0), m_lastModifiedTime(0) {}
+  CacheStatistics() = default;
   CacheStatistics(const CacheStatistics&) = delete;
   virtual ~CacheStatistics() = default;
 
@@ -97,11 +97,11 @@ class APACHE_GEODE_EXPORT CacheStatistics {
   virtual time_point getLastAccessedTime() const;
 
  private:
-  virtual void setLastAccessedTime(time_point lat);
-  virtual void setLastModifiedTime(time_point lmt);
+  virtual void last_accessed(const time_point& tp);
+  virtual void last_modified(const time_point& tp);
 
-  std::atomic<time_point::duration::rep> m_lastAccessTime;
-  std::atomic<time_point::duration::rep> m_lastModifiedTime;
+  std::atomic<time_point> last_accessed_{time_point{}};
+  std::atomic<time_point> last_modified_{time_point{}};
 
   friend class LocalRegion;
 };
