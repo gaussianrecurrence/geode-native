@@ -1,0 +1,57 @@
+name: Manual workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  delete-docker-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to GitHub Packages Docker Registry
+        uses: docker/login-action@v1
+        with:
+          registry: docker.pkg.github.com
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload image
+        run: |
+          docker pull ubuntu:groovy && \
+          docker tag ubuntu:groovy docker.pkg.github.com/${{ github.repository }}/ubuntu:groovy && \
+          docker push docker.pkg.github.com/${{ github.repository }}/ubuntu:groovy
+      - name: Wait for some time
+        run: sleep 30
+      - name: Obtain package ID
+        id: package-id
+        uses: actions/github-script@v3
+        with:
+          script: |
+            const query = `query($owner:String!, $name:String!, $image:String!, $tag:String!) {
+              repository(owner:$owner, name:$name){
+                packages(names:[$image], first: 1) {
+                  nodes {
+                    version(version:$tag) {
+                      id
+                    }
+                  }
+                }
+              }
+            }`;
+
+            console.log(context.payload.inputs)
+            const variables = {
+              owner: context.repo.owner,
+              name: context.repo.repo,
+              image: "ubuntu",
+              tag:"groovy"
+            }
+
+            const result = await github.graphql(query, variables)
+            const package_id = result["repository"]["packages"]["nodes"][0]["version"]["id"]
+            console.log("Package ID is " + package_id)
+            return package_id
+          result-encoding: string
+
+      - name: Delete package
+        uses: actions/delete-package-versions@v1
+        with:
+          package-version-ids: '${{steps.package-id.outputs.result}}'
