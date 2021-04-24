@@ -37,9 +37,7 @@ jobs:
             --boot-disk-type=pd-standard \
             --boot-disk-device-name=${INSTANCE_NAME} \
             --image-project=${{ secrets.GOOGLE_PROJECT }} \
-            --image=${{ env.IMAGE_NAME }} \
-            --service-account "${{ secrets.GOOGLE_SVC_ACC }}" \
-            --scopes="https://www.googleapis.com/auth/cloud-platform" \
+            --image=${{ env.IMAGE_NAME }}
       - name: Start GitHub runner application
         run: |
           export TOKEN=$(curl -s -X POST --url "https://api.github.com/repos/${{ github.repository }}/actions/runners/registration-token" \
