@@ -50,6 +50,9 @@ class DupChecker : public CacheListener {
     auto value = std::dynamic_pointer_cast<CacheableInt32>(event.getNewValue());
 
     const auto &item = m_map.find(key);
+    for (auto &[k, v] : m_map) {
+      std::cout << k->toString() << std::endl;
+    }
 
     if (item != m_map.end()) {
       auto check = std::dynamic_pointer_cast<CacheableInt32>(item->second);
